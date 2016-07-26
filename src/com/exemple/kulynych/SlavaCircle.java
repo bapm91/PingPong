@@ -13,8 +13,8 @@ class SlavaCircle extends JComponent{
         int width = getWidth();
         g2 = (Graphics2D) g;
         Ellipse2D.Double ellipse
-                = new Ellipse2D.Double(0, 0, width, height);
+                = new Ellipse2D.Double(width/2, 50, height/10, height/10);
         System.out.print(g2);
-        g2.fill(ellipse);
+        g2.draw(ellipse);
     }
 }
