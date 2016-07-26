@@ -1,36 +1,78 @@
 package com.exemple.kulynych;
 
-import java.awt.BorderLayout;
-import java.awt.Container;
-import java.awt.Dimension;
-import javax.swing.JFrame;
-/**
- * @author DarkRaha
- *
- */
-public class FirstWindow extends JFrame {
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+
+public class FirstWindow extends JFrame implements ActionListener {
 
     // серийный номер класса
     private static final long serialVersionUID = 1L;
+
 
     public FirstWindow() {
         Container c = getContentPane(); // клиентская область окна
         c.setLayout(new BorderLayout()); // выбираем компоновщик
 
-        // добавляем какие-нибудь дочерние элементы
-        //MyComponent child = new MyComponent();
-        /*MyPanel child= new MyPanel();
-        c.add(child);
-*/
+
+        JMenuBar menubar = new JMenuBar();
+        JMenu menu = new JMenu("File");
+
+        JMenuItem itm = new JMenuItem("New");
+        menu.add(itm);
+        itm.addActionListener(this);
+
+        itm = new JMenuItem("Open");
+        itm.addActionListener(this);
+        menu.add(itm);
+
+        itm = new JMenuItem("Close");
+        itm.addActionListener(this);
+        menu.add(itm);
+
+        // если нужен элемент меню с иконкой
+        //itm = new JMenuItem("Close", new ImageIcon("image.gif"));
+        //itm = new JMenuItem(new ImageIcon("image.gif"));
+
+        // добавляем разделитель
+        menu.add(new JSeparator());
+
+        JMenu submenu = new JMenu("Sub");
+        itm = new JMenuItem("Print");
+        itm.addActionListener(this);
+        submenu.add(itm);
+
+        // Назначаем клавишу: ALT+E
+        itm = new JMenuItem("Export");
+        itm.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E,
+                ActionEvent.ALT_MASK));
+        itm.addActionListener(this);
+        submenu.add(itm);
+
+        menu.add(submenu);
+        menubar.add(menu);
+        setJMenuBar(menubar);
+
+
+
         // -------------------------------------------
         // настройка окна
-        setTitle("Example window"); // заголовок окна
+        setTitle("Ping - Pong"); // заголовок окна
         // желательные размеры окна
         setPreferredSize(new Dimension(640, 480));
         // завершить приложение при закрытии окна
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         pack(); // устанавливаем желательные размеры
         setVisible(true); // отображаем окно
+
+        this.add(new SlavaCircle());
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        System.out.println(e.getActionCommand());
     }
 
     // запуск оконного приложения
