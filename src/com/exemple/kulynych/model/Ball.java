@@ -32,16 +32,16 @@ public class Ball {
         this.speed.y = this.speed.y + dsy;
 
         if (this.coordinates.y >= world.getHeight() - radius * 2) {
-            this.speed.y = -(Math.abs(this.speed.y) - 10);
+            this.speed.y = -(Math.abs(this.speed.y) * 95 / 100);
         }
         if (this.coordinates.y <= 0) {
-            this.speed.y = Math.abs(this.speed.y) - 10;
+            this.speed.y = Math.abs(this.speed.y) * 95 / 100;
         }
         if (this.coordinates.x >= world.getWidth() - radius * 9 / 7) {
-            this.speed.x = -(Math.abs(this.speed.x) - 5);
+            this.speed.x = -(Math.abs(this.speed.x) * 95 / 100);
         }
         if (this.coordinates.x <= 0) {
-            this.speed.x = Math.abs(this.speed.x) - 5;
+            this.speed.x = Math.abs(this.speed.x) * 95 / 100;
         }
 
 

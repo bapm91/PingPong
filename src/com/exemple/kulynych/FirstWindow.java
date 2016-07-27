@@ -27,39 +27,10 @@ public class FirstWindow extends JFrame implements ActionListener {
         JMenu menu = new JMenu("File");
 
         JMenuItem itm = new JMenuItem("New");
-        menu.add(itm);
-        itm.addActionListener(this);
-
-        itm = new JMenuItem("Open");
-        itm.addActionListener(this);
-        menu.add(itm);
-
-        itm = new JMenuItem("Close");
-        itm.addActionListener(this);
-        menu.add(itm);
-
-        // если нужен элемент меню с иконкой
-        //itm = new JMenuItem("Close", new ImageIcon("image.gif"));
-        //itm = new JMenuItem(new ImageIcon("image.gif"));
-
-        // добавляем разделитель
-        menu.add(new JSeparator());
-
-        JMenu submenu = new JMenu("Sub");
-        itm = new JMenuItem("Print");
-        itm.addActionListener(this);
-        submenu.add(itm);
-
-        // Назначаем клавишу: ALT+E
-        itm = new JMenuItem("Export");
         itm.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E,
                 ActionEvent.ALT_MASK));
+        menu.add(itm);
         itm.addActionListener(this);
-        submenu.add(itm);
-
-        menu.add(submenu);
-        menubar.add(menu);
-        setJMenuBar(menubar);
 
         // -------------------------------------------
         // настройка окна
