@@ -7,12 +7,11 @@ public class Ball {
 
     // free fall acceleration, in pixels/s**2. TODO: experiment.
     private final Point G = new Point(0, 400);
-
     Point coordinates = new Point(100, 100);
 
     // in pixels/s
     Point speed = new Point(100, 0);
-    int radius;
+    private int radius;
     private long timestamp = 0;
 
     public Ball(World world, int radius) {
@@ -33,16 +32,16 @@ public class Ball {
         this.speed.y = this.speed.y + dsy;
 
         if (this.coordinates.y >= world.getHeight() - radius * 2) {
-            this.speed.y = -this.speed.y;
+            this.speed.y = -(Math.abs(this.speed.y) - 10);
         }
         if (this.coordinates.y <= 0) {
-            this.speed.y = Math.abs(this.speed.y);
+            this.speed.y = Math.abs(this.speed.y) - 10;
         }
         if (this.coordinates.x >= world.getWidth() - radius * 9 / 7) {
-            this.speed.x = -this.speed.x;
+            this.speed.x = -(Math.abs(this.speed.x) - 5);
         }
         if (this.coordinates.x <= 0) {
-            this.speed.x = Math.abs(this.speed.x);
+            this.speed.x = Math.abs(this.speed.x) - 5;
         }
 
 

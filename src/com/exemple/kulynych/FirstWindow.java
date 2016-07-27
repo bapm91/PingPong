@@ -76,7 +76,7 @@ public class FirstWindow extends JFrame implements ActionListener {
         this.ballView = new SwingBallView(world);
         this.add(ballView);
 
-        moveBallTimer = new Timer(20, new ActionListener() {
+        moveBallTimer = new Timer(10, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 world.tick(System.currentTimeMillis());
