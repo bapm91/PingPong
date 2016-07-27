@@ -26,14 +26,14 @@ class SwingBallView extends JComponent {
         Ellipse2D.Double ellipse = new Ellipse2D.Double(
                 (double) world.getCoordinates().x,
                 (double) world.getCoordinates().y,
-                height / 7,
-                height / 7);
+                world.ball.getRadius(),
+                world.ball.getRadius());
         Paint redToWhite = new GradientPaint(
                 (float) world.getCoordinates().x, 0, colorStart,
-                (float) world.getCoordinates().x + 40, 0, colorFinish);
+                (float) world.getCoordinates().x + world.ball.getRadius() / 3 * 2, 0, colorFinish);
 
         g2.setPaint(redToWhite);
         g2.setStroke(new BasicStroke(5f));
-        g2.draw(ellipse);
+        g2.fill(ellipse);
     }
 }

@@ -1,6 +1,7 @@
 package com.exemple.kulynych;
 
 import com.exemple.kulynych.model.Ball;
+import com.exemple.kulynych.model.World;
 
 import javax.swing.*;
 import javax.swing.Timer;
@@ -13,9 +14,9 @@ public class FirstWindow extends JFrame implements ActionListener {
 
     // серийный номер класса
     private static final long serialVersionUID = 1L;
-    private Timer moveBallTimer;
-    private Ball ball;
     private SwingBallView ballView;
+    private Timer moveBallTimer;
+    private World world;
 
     private FirstWindow() {
         Container c = getContentPane(); // клиентская область окна
@@ -70,18 +71,19 @@ public class FirstWindow extends JFrame implements ActionListener {
         pack(); // устанавливаем желательные размеры
         setVisible(true); // отображаем окно
 
+        world = new World(getWidth(), getHeight());
 
-        this.ballView = new SwingBallView(...);
+        this.ballView = new SwingBallView(world);
         this.add(ballView);
 
-        moveBallTimer = new Timer(20, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                ball.tick(System.currentTimeMillis());
-                ballView.repaint();
-            }
-        });
-        moveBallTimer.start();
+//        moveBallTimer = new Timer(20, new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                world.tick(System.currentTimeMillis());
+//                world.repaint();
+//            }
+//        });
+//        moveBallTimer.start();
     }
 
     @Override
