@@ -26,11 +26,13 @@ public class FirstWindow extends JFrame implements ActionListener {
         JMenuBar menubar = new JMenuBar();
         JMenu menu = new JMenu("File");
 
-        JMenuItem itm = new JMenuItem("New");
+        JMenuItem itm = new JMenuItem("New Ball");
         itm.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E,
                 ActionEvent.ALT_MASK));
         menu.add(itm);
         itm.addActionListener(this);
+        menubar.add(menu);
+        setJMenuBar(menubar);
 
         // -------------------------------------------
         // настройка окна
