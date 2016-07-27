@@ -1,8 +1,10 @@
-package com.exemple.kulynych;
+package com.exemple.kulynych.model;
 
 import java.awt.Point;
 
-class Ball {
+public class Ball {
+    private World world;
+
     // free fall acceleration, in pixels/s**2. TODO: experiment.
     private final Point G = new Point(0, 400);
 
@@ -11,6 +13,12 @@ class Ball {
     // in pixels/s
     private Point speed = new Point(0, 0);
     private long timestamp = 0;
+    private int radius;
+
+    public Ball(World world, int radius) {
+        this.world = world;
+        this.radius = radius;
+    }
 
     // Calculate the new Ball's coordinates and speed at the given moment "timestamp"
     public void tick(long timestamp) {
@@ -22,10 +30,9 @@ class Ball {
         // gravity
         long dt = timestamp - this.timestamp;
         int dsy = (int) (G.y * dt / 1000);
-        System.out.println("Dsy = " + dsy);
         this.speed.y = this.speed.y + dsy;
 
-        if (this.coordinates.y >= 400) {
+        if (this.coordinates.y >= world.getHeight()) {
             this.speed.y = -this.speed.y;
         }
 

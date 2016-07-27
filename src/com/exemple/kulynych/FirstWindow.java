@@ -1,5 +1,7 @@
 package com.exemple.kulynych;
 
+import com.exemple.kulynych.model.Ball;
+
 import javax.swing.*;
 import javax.swing.Timer;
 import java.awt.*;
@@ -68,8 +70,8 @@ public class FirstWindow extends JFrame implements ActionListener {
         pack(); // устанавливаем желательные размеры
         setVisible(true); // отображаем окно
 
-        this.ball = new Ball();
-        this.ballView = new SwingBallView(ball);
+
+        this.ballView = new SwingBallView(...);
         this.add(ballView);
 
         moveBallTimer = new Timer(20, new ActionListener() {
@@ -77,7 +79,6 @@ public class FirstWindow extends JFrame implements ActionListener {
             public void actionPerformed(ActionEvent e) {
                 ball.tick(System.currentTimeMillis());
                 ballView.repaint();
-                System.out.println(ball.toString());
             }
         });
         moveBallTimer.start();
