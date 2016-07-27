@@ -11,7 +11,7 @@ public class Ball {
     Point coordinates = new Point(100, 100);
 
     // in pixels/s
-    Point speed = new Point(0, 0);
+    Point speed = new Point(100, 0);
     int radius;
     private long timestamp = 0;
 
@@ -32,9 +32,19 @@ public class Ball {
         int dsy = (int) (G.y * dt / 1000);
         this.speed.y = this.speed.y + dsy;
 
-        if (this.coordinates.y >= world.getHeight() - radius) {
+        if (this.coordinates.y >= world.getHeight() - radius * 2) {
             this.speed.y = -this.speed.y;
         }
+        if (this.coordinates.y <= 0) {
+            this.speed.y = Math.abs(this.speed.y);
+        }
+        if (this.coordinates.x >= world.getWidth() - radius * 9 / 7) {
+            this.speed.x = -this.speed.x;
+        }
+        if (this.coordinates.x <= 0) {
+            this.speed.x = Math.abs(this.speed.x);
+        }
+
 
         // coordinates
         this.coordinates.x = (int) (this.coordinates.x + this.speed.x * dt / 1000);

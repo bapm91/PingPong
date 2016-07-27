@@ -1,10 +1,11 @@
 package com.exemple.kulynych;
 
-import com.exemple.kulynych.model.Ball;
 import com.exemple.kulynych.model.World;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.Color;
+import java.awt.Paint;
 import java.awt.geom.Ellipse2D;
 
 class SwingBallView extends JComponent {
@@ -19,6 +20,7 @@ class SwingBallView extends JComponent {
         super.paintComponent(g);
         Color colorStart = new Color(255, 0, 0, 255);
         Color colorFinish = new Color(255, 0, 0, 50);
+        Color colorBlack = new Color(0, 0, 0, 255);
         Graphics2D g2;
         int height = getHeight();
         g2 = (Graphics2D) g;
@@ -28,6 +30,13 @@ class SwingBallView extends JComponent {
                 (double) world.getCoordinates().y,
                 world.ball.getRadius(),
                 world.ball.getRadius());
+
+        Ellipse2D.Double ellipseLine = new Ellipse2D.Double(
+                (double) world.getCoordinates().x,
+                (double) world.getCoordinates().y,
+                world.ball.getRadius(),
+                world.ball.getRadius());
+
         Paint redToWhite = new GradientPaint(
                 (float) world.getCoordinates().x, 0, colorStart,
                 (float) world.getCoordinates().x + world.ball.getRadius() / 3 * 2, 0, colorFinish);
@@ -35,5 +44,8 @@ class SwingBallView extends JComponent {
         g2.setPaint(redToWhite);
         g2.setStroke(new BasicStroke(5f));
         g2.fill(ellipse);
+        g2.setStroke(new BasicStroke(1f));
+        g2.setPaint(colorBlack);
+        g2.draw(ellipseLine);
     }
 }
