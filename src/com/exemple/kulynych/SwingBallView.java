@@ -1,5 +1,6 @@
 package com.exemple.kulynych;
 
+import com.exemple.kulynych.model.Ball;
 import com.exemple.kulynych.model.World;
 
 import javax.swing.*;
@@ -10,36 +11,46 @@ import java.awt.geom.Ellipse2D;
 
 class SwingBallView extends JComponent {
 
-    private World world;
+    private Ball ball;
+    private Ellipse2D.Double ellipse;
+    private Ellipse2D.Double ellipseLine;
+    private Paint redToWhite;
 
-    public SwingBallView(World world) {
-        this.world = world;
+    public SwingBallView(Ball ball) {
+        this.ball = ball;
+    }
+
+    private void paintBall(Ball ball) {
+
+        Color colorStart = new Color(255, 0, 0, 255);
+        Color colorFinish = new Color(255, 0, 0, 50);
+        ellipse = new Ellipse2D.Double(
+                (double) ball.getCoordinates().x,
+                (double) ball.getCoordinates().y,
+                ball.getDiametr(),
+                ball.getDiametr());
+
+        ellipseLine = new Ellipse2D.Double(
+                (double) ball.getCoordinates().x,
+                (double) ball.getCoordinates().y,
+                ball.getDiametr(),
+                ball.getDiametr());
+
+        redToWhite = new GradientPaint(
+                (float) ball.getCoordinates().x, 0, colorStart,
+                (float) ball.getCoordinates().x + ball.getDiametr() / 3 * 2, 0, colorFinish);
     }
 
     public void paint(Graphics g) {
         super.paintComponent(g);
-        Color colorStart = new Color(255, 0, 0, 255);
-        Color colorFinish = new Color(255, 0, 0, 50);
+
         Color colorBlack = new Color(0, 0, 0, 255);
         Graphics2D g2;
         int height = getHeight();
         g2 = (Graphics2D) g;
 
-        Ellipse2D.Double ellipse = new Ellipse2D.Double(
-                (double) world.getCoordinates().x,
-                (double) world.getCoordinates().y,
-                world.ball.getRadius(),
-                world.ball.getRadius());
-
-        Ellipse2D.Double ellipseLine = new Ellipse2D.Double(
-                (double) world.getCoordinates().x,
-                (double) world.getCoordinates().y,
-                world.ball.getRadius(),
-                world.ball.getRadius());
-
-        Paint redToWhite = new GradientPaint(
-                (float) world.getCoordinates().x, 0, colorStart,
-                (float) world.getCoordinates().x + world.ball.getRadius() / 3 * 2, 0, colorFinish);
+//        world.balls.forEach(this::paintBall);
+        this.paintBall(ball);
 
         g2.setPaint(redToWhite);
         g2.setStroke(new BasicStroke(5f));

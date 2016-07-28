@@ -11,12 +11,12 @@ public class Ball {
 
     // in pixels/s
     Point speed = new Point(300, 0);
-    private int radius;
+    private int diametr;
     private long timestamp = 0;
 
-    public Ball(World world, int radius) {
+    public Ball(World world, int diametr) {
         this.world = world;
-        this.radius = radius;
+        this.diametr = diametr;
     }
 
     // Calculate the new Ball's coordinates and speed at the given moment "timestamp"
@@ -31,13 +31,13 @@ public class Ball {
         int dsy = (int) (G.y * dt / 1000);
         this.speed.y = this.speed.y + dsy;
 
-        if (this.coordinates.y >= world.getHeight() - radius * 2) {
+        if (this.coordinates.y >= world.getHeight() - diametr * 2) {
             this.speed.y = -Math.abs(this.speed.y) * 95 / 100;
         }
         if (this.coordinates.y <= 0) {
             this.speed.y = Math.abs(this.speed.y) * 95 / 100;
         }
-        if (this.coordinates.x >= world.getWidth() - radius * 9 / 7) {
+        if (this.coordinates.x >= world.getWidth() - diametr * 9 / 7) {
             this.speed.x = -Math.abs(this.speed.x) * 95 / 100;
         }
         if (this.coordinates.x <= 0) {
@@ -64,7 +64,7 @@ public class Ball {
                 '}';
     }
 
-    public int getRadius() {
-        return radius;
+    public int getDiametr() {
+        return diametr;
     }
 }

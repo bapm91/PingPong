@@ -1,26 +1,30 @@
 package com.exemple.kulynych;
 
+import com.exemple.kulynych.model.Ball;
 import com.exemple.kulynych.model.World;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
+import java.awt.event.*;
 
-public class FirstWindow extends JFrame implements ActionListener {
+public class FirstWindow extends JFrame implements ActionListener, ComponentListener {
 
-    // серийный номер класса
     private static final long serialVersionUID = 1L;
+
     private SwingBallView ballView;
     private Timer moveBallTimer;
     private World world;
     private JMenuItem itm;
 
+    @Override
+    public void componentResized(ComponentEvent e) {
+        world.setHeight(this.getHeight());
+        world.setWidth(this.getWidth());
+    }
+
     private FirstWindow() {
         Container c = getContentPane(); // клиентская область окна
         c.setLayout(new BorderLayout()); // выбираем компоновщик
-
 
         JMenuBar menubar = new JMenuBar();
         JMenu menu = new JMenu("File");
@@ -33,20 +37,16 @@ public class FirstWindow extends JFrame implements ActionListener {
         menubar.add(menu);
         setJMenuBar(menubar);
 
-        // -------------------------------------------
-        // настройка окна
-        setTitle("Ping - Pong"); // заголовок окна
-        // желательные размеры окна
+        setTitle("Ping - Pong");
         setPreferredSize(new Dimension(600, 400));
         setMinimumSize(new Dimension(600, 400));
         pack(); // устанавливаем желательные размеры
-        // завершить приложение при закрытии окна
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setVisible(true); // отображаем окно
+        setVisible(true);
 
         world = new World(getWidth(), getHeight());
-
-        this.ballView = new SwingBallView(world);
+        world.balls.add(new Ball(world, 30));
+        this.add(new SwingBallView(world.balls.get(world.balls.size() - 1)));
         this.add(ballView);
 
         moveBallTimer = new Timer(10, new ActionListener() {
@@ -57,28 +57,31 @@ public class FirstWindow extends JFrame implements ActionListener {
             }
         });
         moveBallTimer.start();
-
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         System.out.println(e.getActionCommand());
-
-        World world = new World(getWidth(), getHeight());
-        SwingBallView ballView = new SwingBallView(world);
-        this.add(ballView);
-        Timer moveBallTimer = new Timer(1, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                world.tick(System.currentTimeMillis());
-                ballView.repaint();
-            }
-        });
-        moveBallTimer.start();
+        world.balls.add(new Ball(world, 30));
+        this.add(new SwingBallView(world.balls.get(world.balls.size() - 1)));
     }
 
-    // запуск оконного приложения
     public static void main(String args[]) {
         new FirstWindow();
+    }
+
+    @Override
+    public void componentMoved(ComponentEvent e) {
+
+    }
+
+    @Override
+    public void componentShown(ComponentEvent e) {
+
+    }
+
+    @Override
+    public void componentHidden(ComponentEvent e) {
+
     }
 }
