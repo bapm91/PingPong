@@ -8,7 +8,7 @@ public class World extends Component {
     public List<Ball> balls = new LinkedList<>();
     private int width;
     private int height;
-    private Platform platform;
+//    private Platform platform;
 
     public World(int width, int height) {
         this.width = width;

@@ -31,19 +31,18 @@ public class Ball {
         int dsy = (int) (G.y * dt / 1000);
         this.speed.y = this.speed.y + dsy;
 
-        if (this.coordinates.y >= world.getHeight() - diametr * 2) {
+        if (this.coordinates.y >= world.getHeight() - diametr/2) {
             this.speed.y = -Math.abs(this.speed.y) * 95 / 100;
         }
-        if (this.coordinates.y <= 0) {
+        if (this.coordinates.y <= diametr/2) {
             this.speed.y = Math.abs(this.speed.y) * 95 / 100;
         }
-        if (this.coordinates.x >= world.getWidth() - diametr * 9 / 7) {
+        if (this.coordinates.x >= world.getWidth() - diametr/2) {
             this.speed.x = -Math.abs(this.speed.x) * 95 / 100;
         }
-        if (this.coordinates.x <= 0) {
+        if (this.coordinates.x <= diametr/2) {
             this.speed.x = Math.abs(this.speed.x) * 95 / 100;
         }
-
 
         // coordinates
         this.coordinates.x = (int) (this.coordinates.x + this.speed.x * dt / 1000);
