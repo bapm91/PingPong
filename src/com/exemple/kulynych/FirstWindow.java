@@ -12,8 +12,8 @@ public class FirstWindow extends JFrame implements ActionListener, ComponentList
 
     private static final long serialVersionUID = 1L;
 
-    private SwingBallView ballView;
-    private SwingWallView wallView;
+    private SwingView ballView;
+    private SwingView wallView;
     private World world;
 
     @Override
@@ -46,18 +46,19 @@ public class FirstWindow extends JFrame implements ActionListener, ComponentList
         world = new World(
                 getContentPane().getWidth(),
                 getContentPane().getHeight());
-        world.balls.add(new Ball(
-                world,
-                5 + (int) (Math.random() * 60)));
-        ballView = new SwingBallView(world);
-        this.add(ballView);
-
         world.wall.add(new Wall(
                 world,
                 5 + (int) (Math.random() * 60),
                 5 + (int) (Math.random() * 60)));
-        wallView = new SwingWallView(world);
+        wallView = new SwingView(world);
         this.add(wallView);
+
+        world.balls.add(new Ball(
+                world,
+                5 + (int) (Math.random() * 60)));
+        ballView = new SwingView(world);
+        this.add(ballView);
+
 
         Timer moveBallTimer = new Timer(20, e -> {
             world.tick(System.currentTimeMillis());

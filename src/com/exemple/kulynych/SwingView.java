@@ -1,23 +1,22 @@
 package com.exemple.kulynych;
 
 import com.exemple.kulynych.model.Ball;
+import com.exemple.kulynych.model.Wall;
 import com.exemple.kulynych.model.World;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.Color;
-import java.awt.Paint;
 import java.awt.geom.Ellipse2D;
+import java.awt.geom.Rectangle2D;
 
-class SwingBallView extends JComponent {
-
+public class SwingView extends JComponent{
     private World world;
 
     private final Color colorBlack = new Color(0, 0, 0, 255);
     private Color colorStart = new Color(255, 0, 0, 255);
     private Color colorFinish = new Color(255, 0, 0, 50);
 
-    public SwingBallView(World world) {
+    public SwingView(World world) {
         this.world = world;
     }
 
@@ -50,10 +49,22 @@ class SwingBallView extends JComponent {
     }
 
     public void paint(Graphics g) {
-        super.paintComponent(g);
 
         for (Ball ball: world.balls) {
             paintBall((Graphics2D) g, ball);
         }
+        for (Wall wall : world.wall) {
+            paintWall((Graphics2D) g, wall);
+        }
+    }
+
+    private void paintWall(Graphics2D g2, Wall wall) {
+
+        g2.draw(new Rectangle2D.Double(
+                wall.getWallPosition().x,
+                wall.getWallPosition().y,
+                wall.getRectWidth(),
+                wall.getRectHeight()));
+        g2.setPaint(colorBlack);
     }
 }

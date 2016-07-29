@@ -15,8 +15,8 @@ public class Ball {
 
     public Ball(World world, int diametr) {
         this.world = world;
-        Position position = new Position();
         this.diametr = diametr;
+        Position position = new Position();
         coordinates = position.position(world, diametr, diametr);
     }
 
