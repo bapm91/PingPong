@@ -1,6 +1,7 @@
 package com.exemple.kulynych;
 
 import com.exemple.kulynych.model.Ball;
+import com.exemple.kulynych.model.Wall;
 import com.exemple.kulynych.model.World;
 
 import javax.swing.*;
@@ -12,6 +13,7 @@ public class FirstWindow extends JFrame implements ActionListener, ComponentList
     private static final long serialVersionUID = 1L;
 
     private SwingBallView ballView;
+    private SwingWallView wallView;
     private World world;
 
     @Override
@@ -41,10 +43,21 @@ public class FirstWindow extends JFrame implements ActionListener, ComponentList
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
 
-        world = new World(getContentPane().getWidth(), getContentPane().getHeight());
-        world.balls.add(new Ball(world, 5 + (int) (Math.random() * 60)));
+        world = new World(
+                getContentPane().getWidth(),
+                getContentPane().getHeight());
+        world.balls.add(new Ball(
+                world,
+                5 + (int) (Math.random() * 60)));
         ballView = new SwingBallView(world);
         this.add(ballView);
+
+        world.wall.add(new Wall(
+                world,
+                5 + (int) (Math.random() * 60),
+                5 + (int) (Math.random() * 60)));
+        wallView = new SwingWallView(world);
+        this.add(wallView);
 
         Timer moveBallTimer = new Timer(20, e -> {
             world.tick(System.currentTimeMillis());

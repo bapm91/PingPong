@@ -15,31 +15,15 @@ public class Ball {
 
     public Ball(World world, int diametr) {
         this.world = world;
-        coordinates = CoordPoint();
+        Position position = new Position();
         this.diametr = diametr;
-    }
-
-    public Point CoordPoint (){
-        int height = world.getHeight();
-        int width = world.getWidth();
-        int coordinatesX = (int) (Math.random() * width);
-        int coordinatesY = (int) (Math.random() * height);
-
-        if (coordinatesX + diametr >= world.getWidth()){
-            coordinatesX -= diametr;
-        }
-        if (coordinatesY + diametr >= world.getHeight()){
-            coordinatesY -= diametr;
-        }
-
-        return new Point(coordinatesX, coordinatesY);
+        coordinates = position.position(world, diametr, diametr);
     }
 
     // in pixels/s
     Point speed = new Point(
             minSpeed + (int) (Math.random() * 200),
             minSpeed + (int) (Math.random() * 200));
-
 
     // Calculate the new Ball's coordinates and speed at the given moment "timestamp"
     public void tick(long timestamp) {
