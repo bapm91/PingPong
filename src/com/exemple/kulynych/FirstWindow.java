@@ -15,6 +15,8 @@ public class FirstWindow extends JFrame implements ActionListener, ComponentList
     private SwingView ballView;
     private SwingView wallView;
     private World world;
+    private JMenuItem itemBall;
+    private JMenuItem itemWall;
 
     @Override
     public void componentResized(ComponentEvent e) {
@@ -29,10 +31,14 @@ public class FirstWindow extends JFrame implements ActionListener, ComponentList
         JMenuBar menubar = new JMenuBar();
         JMenu menu = new JMenu("File");
 
-        JMenuItem itm = new JMenuItem("New Ball");
-        itm.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, ActionEvent.ALT_MASK));
-        menu.add(itm);
-        itm.addActionListener(this);
+        itemBall = new JMenuItem("New Ball");
+        itemBall.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_B, ActionEvent.ALT_MASK));
+        menu.add(itemBall);
+        itemBall.addActionListener(this);
+        itemWall = new JMenuItem("New Wall");
+        itemWall.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_W, ActionEvent.ALT_MASK));
+        menu.add(itemWall);
+        itemWall.addActionListener(this);
         menubar.add(menu);
         setJMenuBar(menubar);
 
@@ -59,7 +65,6 @@ public class FirstWindow extends JFrame implements ActionListener, ComponentList
         ballView = new SwingView(world);
         this.add(ballView);
 
-
         Timer moveBallTimer = new Timer(20, e -> {
             world.tick(System.currentTimeMillis());
             ballView.repaint();
@@ -70,10 +75,19 @@ public class FirstWindow extends JFrame implements ActionListener, ComponentList
     @Override
     public void actionPerformed(ActionEvent e) {
         System.out.println(e.getActionCommand());
-        world.balls.add(new Ball(world, 5 + (int) (Math.random() * 60)));
+        if (e.getSource().equals(itemBall)) {
+            world.balls.add(new Ball(
+                    world,
+                    5 + (int) (Math.random() * 60)));
+        }
+        if (e.getSource().equals(itemWall)){
+            world.wall.add(new Wall(
+                    world,
+                    5 + (int) (Math.random() * 60),
+                    5 + (int) (Math.random() * 60)));
+        }
     }
 
-    // запуск оконного приложения
     public static void main(String args[]) {
         new FirstWindow();
     }
