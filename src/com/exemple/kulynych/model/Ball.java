@@ -1,23 +1,45 @@
 package com.exemple.kulynych.model;
 
-import java.awt.Point;
+import java.awt.*;
 
 public class Ball {
     private World world;
 
     // free fall acceleration, in pixels/s**2. TODO: experiment.
     private final Point G = new Point(0, 400);
-    Point coordinates = new Point(100, 100);
-
-    // in pixels/s
-    Point speed = new Point(300, 0);
     private int diametr;
+    private int minSpeed = 100;
     private long timestamp = 0;
+
+    public Point coordinates;
 
     public Ball(World world, int diametr) {
         this.world = world;
+        coordinates = CoordPoint();
         this.diametr = diametr;
     }
+
+    public Point CoordPoint (){
+        int height = world.getHeight();
+        int width = world.getWidth();
+        int coordinatesX = (int) (Math.random() * width);
+        int coordinatesY = (int) (Math.random() * height);
+
+        if (coordinatesX + diametr >= world.getWidth()){
+            coordinatesX -= diametr;
+        }
+        if (coordinatesY + diametr >= world.getHeight()){
+            coordinatesY -= diametr;
+        }
+
+        return new Point(coordinatesX, coordinatesY);
+    }
+
+    // in pixels/s
+    Point speed = new Point(
+            minSpeed + (int) (Math.random() * 200),
+            minSpeed + (int) (Math.random() * 200));
+
 
     // Calculate the new Ball's coordinates and speed at the given moment "timestamp"
     public void tick(long timestamp) {
@@ -31,16 +53,16 @@ public class Ball {
         int dsy = (int) (G.y * dt / 1000);
         this.speed.y = this.speed.y + dsy;
 
-        if (this.coordinates.y >= world.getHeight() - diametr/2) {
+        if (this.coordinates.y >= world.getHeight() - diametr / 2) {
             this.speed.y = -Math.abs(this.speed.y) * 95 / 100;
         }
-        if (this.coordinates.y <= diametr/2) {
+        if (this.coordinates.y <= diametr / 2) {
             this.speed.y = Math.abs(this.speed.y) * 95 / 100;
         }
-        if (this.coordinates.x >= world.getWidth() - diametr/2) {
+        if (this.coordinates.x >= world.getWidth() - diametr / 2) {
             this.speed.x = -Math.abs(this.speed.x) * 95 / 100;
         }
-        if (this.coordinates.x <= diametr/2) {
+        if (this.coordinates.x <= diametr / 2) {
             this.speed.x = Math.abs(this.speed.x) * 95 / 100;
         }
 
