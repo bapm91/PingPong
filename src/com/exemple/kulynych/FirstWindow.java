@@ -20,8 +20,8 @@ public class FirstWindow extends JFrame implements ActionListener, ComponentList
 
     @Override
     public void componentResized(ComponentEvent e) {
-        world.setHeight(getContentPane().getHeight());
-        world.setWidth(getContentPane().getWidth());
+        world.setHeight(this.getContentPane().getSize().width);
+        world.setWidth(this.getContentPane().getSize().height);
     }
 
     private FirstWindow() {
@@ -59,9 +59,8 @@ public class FirstWindow extends JFrame implements ActionListener, ComponentList
     }
 
     private void buildWorld() {
-        world = new World(
-                getContentPane().getWidth(),
-                getContentPane().getHeight());
+        world = new World(this.getContentPane().getSize().width,
+                this.getContentPane().getSize().height);
         world.wall.add(new Wall(
                 world,
                 5 + (int) (Math.random() * 60),
