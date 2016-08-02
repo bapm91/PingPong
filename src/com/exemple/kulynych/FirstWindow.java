@@ -8,7 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class FirstWindow extends JFrame implements ActionListener, ComponentListener {
+public class FirstWindow extends JFrame implements ActionListener {
 
     private static final long serialVersionUID = 1L;
 
@@ -17,12 +17,6 @@ public class FirstWindow extends JFrame implements ActionListener, ComponentList
     private World world;
     private JMenuItem itemBall;
     private JMenuItem itemWall;
-
-    @Override
-    public void componentResized(ComponentEvent e) {
-        world.setHeight(this.getContentPane().getSize().width);
-        world.setWidth(this.getContentPane().getSize().height);
-    }
 
     private FirstWindow() {
         Container c = getContentPane(); // клиентская область окна
@@ -35,6 +29,27 @@ public class FirstWindow extends JFrame implements ActionListener, ComponentList
 
     private void createWindow() {
         setTitle("Ping - Pong");
+        this.addComponentListener(new ComponentListener(){
+            public void componentResized(ComponentEvent e) {
+                world.setHeight(getContentPane().getSize().height);
+                world.setWidth(getContentPane().getSize().width);
+            }
+
+            @Override
+            public void componentMoved(ComponentEvent e) {
+
+            }
+
+            @Override
+            public void componentShown(ComponentEvent e) {
+
+            }
+
+            @Override
+            public void componentHidden(ComponentEvent e) {
+
+            }
+        });
         setPreferredSize(new Dimension(600, 400));
         setMinimumSize(new Dimension(600, 400));
         pack();
@@ -99,20 +114,5 @@ public class FirstWindow extends JFrame implements ActionListener, ComponentList
 
     public static void main(String args[]) {
         new FirstWindow();
-    }
-
-    @Override
-    public void componentMoved(ComponentEvent e) {
-
-    }
-
-    @Override
-    public void componentShown(ComponentEvent e) {
-
-    }
-
-    @Override
-    public void componentHidden(ComponentEvent e) {
-
     }
 }

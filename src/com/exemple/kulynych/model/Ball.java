@@ -50,6 +50,13 @@ public class Ball {
             this.speed.x = Math.abs(this.speed.x) * 95 / 100;
         }
 
+        if (this.coordinates.x >= world.getWidth()) {
+            this.coordinates.x = Position.rePositionX(world);
+        }
+        if (this.coordinates.y >= world.getHeight()) {
+            this.coordinates.y = Position.rePositionY(world);
+        }
+
         // coordinates
         this.coordinates.x = (int) (this.coordinates.x + this.speed.x * dt / 1000);
         this.coordinates.y = (int) (this.coordinates.y + this.speed.y * dt / 1000);

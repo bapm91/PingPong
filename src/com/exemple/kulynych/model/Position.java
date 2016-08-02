@@ -19,4 +19,12 @@ public class Position {
 
         return new Point(coordinatesX, coordinatesY);
     }
+
+    public static int rePositionX(World world){
+        return (int) (Math.random() * world.getWidth());
+    }
+
+    public static int rePositionY(World world){
+        return (int) (Math.random() * world.getHeight());
+    }
 }
