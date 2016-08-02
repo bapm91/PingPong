@@ -28,8 +28,8 @@ public class FirstWindow extends JFrame implements ActionListener, ComponentList
         Container c = getContentPane(); // клиентская область окна
         c.setLayout(new BorderLayout()); // выбираем компоновщик
 
-        createWindow();
         createMenu();
+        createWindow();
         buildWorld();
     }
 
@@ -37,7 +37,7 @@ public class FirstWindow extends JFrame implements ActionListener, ComponentList
         setTitle("Ping - Pong");
         setPreferredSize(new Dimension(600, 400));
         setMinimumSize(new Dimension(600, 400));
-        pack(); // устанавливаем желательные размеры
+        pack();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
     }
