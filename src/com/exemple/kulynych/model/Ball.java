@@ -89,33 +89,32 @@ public class Ball {
         this.timestamp = timestamp;
     }
 
-    public void detectCollisions(long time) {
+    public void detectCollision(Ball other) {
+        if (other == this) {
+            return;
+        }
+        
         int radius = diametr / 2;
-
-        for (int i = 0; i < world.balls.size(); i++) {
-            int radiusSecondBall = world.balls.get(i).getDiametr() / 2;
-            if (world.balls.get(i) != this) {
-                if (coordinates.x + radius + radiusSecondBall > world.balls.get(i).coordinates.x
-                        && coordinates.x < world.balls.get(i).coordinates.x + radius + radiusSecondBall
-                        && coordinates.y + radius + radiusSecondBall > world.balls.get(i).coordinates.y
-                        && coordinates.y < world.balls.get(i).coordinates.y + radius + radiusSecondBall) {
-                    if (distanceTo(this, world.balls.get(i)) < radius + radiusSecondBall) {
-//                        drawCollision(this, world.balls.get(i));
-                        calculateNewVelocities(this, world.balls.get(i));
-                    }
-                }
+        int radiusSecondBall = other.getDiametr() / 2;
+        
+        if (coordinates.x + radius + radiusSecondBall > other.coordinates.x
+                && coordinates.x < other.coordinates.x + radius + radiusSecondBall
+                && coordinates.y + radius + radiusSecondBall > other.coordinates.y
+                && coordinates.y < other.coordinates.y + radius + radiusSecondBall) {
+            if (this.distanceTo(other) < radius + radiusSecondBall) {
+                calculateNewVelocities(this, other);
             }
         }
-        this.tick(time);
     }
 
-    public Double distanceTo(Ball ballFirst, Ball ballSecond) {
+    public Double distanceTo(Ball ballSecond) {
         double distance;
         distance = Math.sqrt(
-                (ballFirst.coordinates.x - ballSecond.coordinates.x)
-                        * (ballFirst.coordinates.x - ballSecond.coordinates.x)
-                        + (ballFirst.coordinates.y - ballSecond.coordinates.y)
-                        * (ballFirst.coordinates.y - ballSecond.coordinates.y));
+                (this.coordinates.x - ballSecond.coordinates.x)
+                        * (this.coordinates.x - ballSecond.coordinates.x)
+                        + (this.coordinates.y - ballSecond.coordinates.y)
+                        * (this.coordinates.y - ballSecond.coordinates.y));
+        // WTF?..
         if (distance < 0) { distance = distance * -1; }
         return distance;
     }
