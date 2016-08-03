@@ -90,7 +90,9 @@ public class FirstWindow extends JFrame implements ActionListener {
         this.add(ballView);
 
         Timer moveBallTimer = new Timer(20, e -> {
-            world.tick(System.currentTimeMillis());
+            for (Ball ball : world.balls){
+                ball.detectCollisions(System.currentTimeMillis());
+            }
             ballView.repaint();
         });
         moveBallTimer.start();
