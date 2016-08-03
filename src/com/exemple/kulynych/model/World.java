@@ -16,7 +16,15 @@ public class World extends Component {
     }
 
     public void tick(long time) {
-        for(Ball ball: balls) {
+        for (int i = 0; i < balls.size(); i++) {
+            Ball ballA = balls.get(i);
+            for (int j = i+1; j < balls.size(); j++) {
+                Ball ballB = balls.get(j);
+                ballA.detectCollision(ballB);
+            }
+        }
+        
+        for (Ball ball : balls) {
             ball.tick(time);
         }
     }
