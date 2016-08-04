@@ -1,9 +1,6 @@
 package com.exemple.kulynych.model;
 
-import sun.java2d.cmm.ColorTransform;
-
 import java.awt.*;
-import java.util.Map;
 
 public class Ball {
     private World world;
@@ -15,12 +12,22 @@ public class Ball {
     private long timestamp = 0;
 
     public Point coordinates;
+    private Point center;
 
     public Ball(World world, int diametr) {
         this.world = world;
         this.diametr = diametr;
+        coordinates();
+        center();
+    }
+
+    private void coordinates() {
         Position position = new Position();
         coordinates = position.position(world, diametr, diametr);
+    }
+
+    private void center() {
+        center = new Point(coordinates.x + diametr / 2, coordinates.y + diametr / 2);
     }
 
     // in pixels/s
@@ -28,12 +35,12 @@ public class Ball {
             minSpeed + (int) (Math.random() * 200),
             minSpeed + (int) (Math.random() * 200));
 
-    public void calculateNewVelocities(Ball ballFirst, Ball ballSecond) {
-        int mass1 = ballFirst.getDiametr() / 2;
+    public void calculateNewVelocities(Ball ballSecond) {
+        int mass1 = this.getDiametr() / 2;
         int mass2 = ballSecond.getDiametr() / 2;
-        int velX1 = ballFirst.getSpeed().x;
+        int velX1 = this.getSpeed().x;
         int velX2 = ballSecond.getSpeed().x;
-        int velY1 = ballFirst.getSpeed().y;
+        int velY1 = this.getSpeed().y;
         int velY2 = ballSecond.getSpeed().y;
 
         int newVelX1 = (velX1 * (mass1 - mass2) + (2 * mass2 * velX2)) / (mass1 + mass2);
@@ -41,13 +48,8 @@ public class Ball {
         int newVelY1 = (velY1 * (mass1 - mass2) + (2 * mass2 * velY2)) / (mass1 + mass2);
         int newVelY2 = (velY2 * (mass2 - mass1) + (2 * mass1 * velY1)) / (mass1 + mass2);
 
-        ballFirst.setSpeed(newVelX1, newVelY1);
+        this.setSpeed(newVelX1, newVelY1);
         ballSecond.setSpeed(newVelX2, newVelY2);
-
-//        ballFirst.coordinates.x = ballFirst.coordinates.x + newVelX1;
-//        ballFirst.coordinates.y = ballFirst.coordinates.y + newVelY1;
-//        ballSecond.coordinates.x = ballSecond.coordinates.x + newVelX2;
-//        ballSecond.coordinates.y = ballSecond.coordinates.y + newVelY2;
     }
 
     // Calculate the new Ball's coordinates and speed at the given moment "timestamp"
@@ -87,22 +89,41 @@ public class Ball {
         this.coordinates.y = (int) (this.coordinates.y + this.speed.y * dt / 1000);
 
         this.timestamp = timestamp;
+        center();
     }
 
-    public void detectCollision(Ball other) {
+    public void detectWallCollision(Wall wall) {
+        if (wall.contains(this)) {
+            if (wall.relatively(this).equals("Right")) {
+                this.speed.x = Math.abs(this.speed.x);
+            }
+            if (wall.relatively(this).equals("Left")) {
+                this.speed.x = -Math.abs(this.speed.x);
+            }
+            if (wall.relatively(this).equals("Top")) {
+                this.speed.y = -Math.abs(this.speed.y);
+            }
+            if (wall.relatively(this).equals("Bottom")) {
+                this.speed.y = Math.abs(this.speed.y);
+            }
+        }
+
+    }
+
+    public void detectBallCollision(Ball other) {
         if (other == this) {
             return;
         }
-        
+
         int radius = diametr / 2;
         int radiusSecondBall = other.getDiametr() / 2;
-        
+
         if (coordinates.x + radius + radiusSecondBall > other.coordinates.x
                 && coordinates.x < other.coordinates.x + radius + radiusSecondBall
                 && coordinates.y + radius + radiusSecondBall > other.coordinates.y
                 && coordinates.y < other.coordinates.y + radius + radiusSecondBall) {
             if (this.distanceTo(other) < radius + radiusSecondBall) {
-                calculateNewVelocities(this, other);
+                calculateNewVelocities(other);
             }
         }
     }
@@ -114,8 +135,6 @@ public class Ball {
                         * (this.coordinates.x - ballSecond.coordinates.x)
                         + (this.coordinates.y - ballSecond.coordinates.y)
                         * (this.coordinates.y - ballSecond.coordinates.y));
-        // WTF?..
-        if (distance < 0) { distance = distance * -1; }
         return distance;
     }
 
@@ -139,8 +158,12 @@ public class Ball {
         return speed;
     }
 
-    public void setSpeed(int x, int y){
+    public void setSpeed(int x, int y) {
         this.speed.x = x;
         this.speed.y = y;
+    }
+
+    public Point getCenter() {
+        return center;
     }
 }

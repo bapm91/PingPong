@@ -53,7 +53,7 @@ public class SwingView extends JComponent{
         for (Ball ball: world.balls) {
             paintBall((Graphics2D) g, ball);
         }
-        for (Wall wall : world.wall) {
+        for (Wall wall : world.walls) {
             paintWall((Graphics2D) g, wall);
         }
     }

@@ -6,7 +6,7 @@ import java.util.List;
 
 public class World extends Component {
     public List<Ball> balls = new LinkedList<>();
-    public List<Wall> wall = new LinkedList<>();
+    public List<Wall> walls = new LinkedList<>();
     private int width;
     private int height;
 
@@ -18,12 +18,14 @@ public class World extends Component {
     public void tick(long time) {
         for (int i = 0; i < balls.size(); i++) {
             Ball ballA = balls.get(i);
-            for (int j = i+1; j < balls.size(); j++) {
-                Ball ballB = balls.get(j);
-                ballA.detectCollision(ballB);
+            for (int j = i + 1; j < balls.size(); j++) {
+                ballA.detectBallCollision(balls.get(j));
+            }
+            for (int j = 0; j < walls.size(); j++) {
+                ballA.detectWallCollision(walls.get(j));
             }
         }
-        
+
         for (Ball ball : balls) {
             ball.tick(time);
         }

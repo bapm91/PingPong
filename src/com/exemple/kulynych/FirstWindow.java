@@ -8,15 +8,12 @@ import javax.swing.*;
 import javax.swing.Timer;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.*;
-import java.util.List;
 
 public class FirstWindow extends JFrame implements ActionListener {
 
     private static final long serialVersionUID = 1L;
 
-    private SwingView ballView;
-    private SwingView wallView;
+    private SwingView swingView;
     private World world;
     private JMenuItem itemBall;
     private JMenuItem itemWall;
@@ -79,22 +76,20 @@ public class FirstWindow extends JFrame implements ActionListener {
     private void buildWorld() {
         world = new World(this.getContentPane().getSize().width,
                 this.getContentPane().getSize().height);
-        world.wall.add(new Wall(
+        world.walls.add(new Wall(
                 world,
                 5 + (int) (Math.random() * 60),
                 5 + (int) (Math.random() * 60)));
-        wallView = new SwingView(world);
-        this.add(wallView);
 
         world.balls.add(new Ball(
                 world,
                 5 + (int) (Math.random() * 60)));
-        ballView = new SwingView(world);
-        this.add(ballView);
+        swingView = new SwingView(world);
+        this.add(swingView);
 
         Timer moveBallTimer = new Timer(20, e -> {
             world.tick(System.currentTimeMillis());
-            ballView.repaint();
+            swingView.repaint();
         });
         moveBallTimer.start();
     }
@@ -108,7 +103,7 @@ public class FirstWindow extends JFrame implements ActionListener {
                     5 + (int) (Math.random() * 60)));
         }
         if (e.getSource().equals(itemWall)){
-            world.wall.add(new Wall(
+            world.walls.add(new Wall(
                     world,
                     5 + (int) (Math.random() * 60),
                     5 + (int) (Math.random() * 60)));
