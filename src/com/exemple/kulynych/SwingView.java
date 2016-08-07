@@ -1,6 +1,6 @@
 package com.exemple.kulynych;
 
-import com.exemple.kulynych.model.Ball;
+import com.exemple.kulynych.model.ball.Ball;
 import com.exemple.kulynych.model.Wall;
 import com.exemple.kulynych.model.World;
 

@@ -1,4 +1,8 @@
-package com.exemple.kulynych.model;
+package com.exemple.kulynych.model.ball;
+
+import com.exemple.kulynych.model.Position;
+import com.exemple.kulynych.model.Wall;
+import com.exemple.kulynych.model.World;
 
 import java.awt.Point;
 

@@ -1,5 +1,7 @@
 package com.exemple.kulynych.model;
 
+import com.exemple.kulynych.model.ball.Ball;
+
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
