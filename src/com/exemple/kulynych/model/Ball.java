@@ -1,43 +1,47 @@
 package com.exemple.kulynych.model;
 
-import java.awt.*;
+import java.awt.Point;
 
 public class Ball {
     private World world;
 
     // free fall acceleration, in pixels/s**2. TODO: experiment.
     private final Point G = new Point(0, 400);
-    private int diametr;
-    private int minSpeed = 100;
+    private int diameter;
     private long timestamp = 0;
 
-    public Point coordinates;
+    private Point coordinates;
     private Point center;
+    private Point speed;
 
-    public Ball(World world, int diametr) {
+    public Ball(World world, int diameter) {
         this.world = world;
-        this.diametr = diametr;
+        this.diameter = diameter;
         coordinates();
         center();
+        speed();
     }
 
     private void coordinates() {
         Position position = new Position();
-        coordinates = position.position(world, diametr, diametr);
+        coordinates = position.position(world, diameter, diameter);
     }
 
     private void center() {
-        center = new Point(coordinates.x + diametr / 2, coordinates.y + diametr / 2);
+        center = new Point(coordinates.x + diameter / 2, coordinates.y + diameter / 2);
     }
 
     // in pixels/s
-    Point speed = new Point(
-            minSpeed + (int) (Math.random() * 200),
-            minSpeed + (int) (Math.random() * 200));
+    private void speed() {
+        int minSpeed = 100;
+        speed = new Point(
+                minSpeed + (int) (Math.random() * 200),
+                minSpeed + (int) (Math.random() * 200));
+    }
 
-    public void calculateNewVelocities(Ball ballSecond) {
-        int mass1 = this.getDiametr() / 2;
-        int mass2 = ballSecond.getDiametr() / 2;
+    private void calculateNewVelocities(Ball ballSecond) {
+        int mass1 = this.getDiameter() / 2;
+        int mass2 = ballSecond.getDiameter() / 2;
         int velX1 = this.getSpeed().x;
         int velX2 = ballSecond.getSpeed().x;
         int velY1 = this.getSpeed().y;
@@ -64,23 +68,23 @@ public class Ball {
         int dsy = (int) (G.y * dt / 1000);
         this.speed.y = this.speed.y + dsy;
 
-        if (this.coordinates.y >= world.getHeight() - diametr / 2) {
+        if (this.coordinates.y >= world.getHeight() - diameter / 2) {
             this.speed.y = -Math.abs(this.speed.y) * 95 / 100;
         }
-        if (this.coordinates.y <= diametr / 2) {
+        if (this.coordinates.y <= diameter / 2) {
             this.speed.y = Math.abs(this.speed.y) * 95 / 100;
         }
-        if (this.coordinates.x >= world.getWidth() - diametr / 2) {
+        if (this.coordinates.x >= world.getWidth() - diameter / 2) {
             this.speed.x = -Math.abs(this.speed.x) * 95 / 100;
         }
-        if (this.coordinates.x <= diametr / 2) {
+        if (this.coordinates.x <= diameter / 2) {
             this.speed.x = Math.abs(this.speed.x) * 95 / 100;
         }
 
-        if (this.coordinates.x >= world.getWidth() + diametr * 2) {
+        if (this.coordinates.x >= world.getWidth() + diameter * 2) {
             this.coordinates.x = Position.rePositionX(world);
         }
-        if (this.coordinates.y >= world.getHeight() + diametr * 2) {
+        if (this.coordinates.y >= world.getHeight() + diameter * 2) {
             this.coordinates.y = Position.rePositionY(world);
         }
 
@@ -115,8 +119,8 @@ public class Ball {
             return;
         }
 
-        int radius = diametr / 2;
-        int radiusSecondBall = other.getDiametr() / 2;
+        int radius = diameter / 2;
+        int radiusSecondBall = other.getDiameter() / 2;
 
         if (coordinates.x + radius + radiusSecondBall > other.coordinates.x
                 && coordinates.x < other.coordinates.x + radius + radiusSecondBall
@@ -128,7 +132,7 @@ public class Ball {
         }
     }
 
-    public Double distanceTo(Ball ballSecond) {
+    private Double distanceTo(Ball ballSecond) {
         double distance;
         distance = Math.sqrt(
                 (this.coordinates.x - ballSecond.coordinates.x)
@@ -138,8 +142,25 @@ public class Ball {
         return distance;
     }
 
+    public void setSpeed(int x, int y) {
+        this.speed.x = x;
+        this.speed.y = y;
+    }
+
     public Point getCoordinates() {
         return coordinates;
+    }
+
+    public int getDiameter() {
+        return diameter;
+    }
+
+    public Point getSpeed() {
+        return speed;
+    }
+
+    public Point getCenter() {
+        return center;
     }
 
     @Override
@@ -148,22 +169,5 @@ public class Ball {
                 "coordinates=" + coordinates +
                 ", speed=" + speed +
                 '}';
-    }
-
-    public int getDiametr() {
-        return diametr;
-    }
-
-    public Point getSpeed() {
-        return speed;
-    }
-
-    public void setSpeed(int x, int y) {
-        this.speed.x = x;
-        this.speed.y = y;
-    }
-
-    public Point getCenter() {
-        return center;
     }
 }

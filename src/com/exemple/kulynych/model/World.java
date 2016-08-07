@@ -1,6 +1,6 @@
 package com.exemple.kulynych.model;
 
-import java.awt.*;
+import java.awt.Component;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -21,9 +21,7 @@ public class World extends Component {
             for (int j = i + 1; j < balls.size(); j++) {
                 ballA.detectBallCollision(balls.get(j));
             }
-            for (int j = 0; j < walls.size(); j++) {
-                ballA.detectWallCollision(walls.get(j));
-            }
+            walls.forEach(ballA::detectWallCollision);
         }
 
         for (Ball ball : balls) {

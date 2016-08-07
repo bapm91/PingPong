@@ -9,7 +9,7 @@ import java.awt.*;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 
-public class SwingView extends JComponent{
+public class SwingView extends JComponent {
     private World world;
 
     private final Color colorBlack = new Color(0, 0, 0, 255);
@@ -22,23 +22,23 @@ public class SwingView extends JComponent{
 
     private void paintBall(Graphics2D g2, Ball ball) {
 
-        double r = ball.getDiametr() / 2;
+        double r = ball.getDiameter() / 2;
 
         Ellipse2D.Double ellipse = new Ellipse2D.Double(
-                (double) ball.getCoordinates().x-r,
-                (double) ball.getCoordinates().y-r,
-                ball.getDiametr(),
-                ball.getDiametr());
+                (double) ball.getCoordinates().x - r,
+                (double) ball.getCoordinates().y - r,
+                ball.getDiameter(),
+                ball.getDiameter());
 
         Ellipse2D.Double ellipseLine = new Ellipse2D.Double(
-                (double) ball.getCoordinates().x-r,
-                (double) ball.getCoordinates().y-r,
-                ball.getDiametr(),
-                ball.getDiametr());
+                (double) ball.getCoordinates().x - r,
+                (double) ball.getCoordinates().y - r,
+                ball.getDiameter(),
+                ball.getDiameter());
 
         Paint redToWhite = new GradientPaint(
                 (float) ball.getCoordinates().x, 0, colorStart,
-                (float) ball.getCoordinates().x + ball.getDiametr() / 3 * 2, 0, colorFinish);
+                (float) ball.getCoordinates().x + ball.getDiameter() / 3 * 2, 0, colorFinish);
 
         g2.setPaint(redToWhite);
         g2.setStroke(new BasicStroke(5f));
@@ -50,7 +50,7 @@ public class SwingView extends JComponent{
 
     public void paint(Graphics g) {
 
-        for (Ball ball: world.balls) {
+        for (Ball ball : world.balls) {
             paintBall((Graphics2D) g, ball);
         }
         for (Wall wall : world.walls) {
@@ -61,8 +61,8 @@ public class SwingView extends JComponent{
     private void paintWall(Graphics2D g2, Wall wall) {
 
         g2.draw(new Rectangle2D.Double(
-                wall.getWallPosition().x,
-                wall.getWallPosition().y,
+                wall.getWallPosition().x - wall.getRectWidth() / 2,
+                wall.getWallPosition().y - wall.getRectHeight() / 2,
                 wall.getRectWidth(),
                 wall.getRectHeight()));
         g2.setPaint(colorBlack);
