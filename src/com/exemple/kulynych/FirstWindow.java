@@ -3,10 +3,13 @@ package com.exemple.kulynych;
 import com.exemple.kulynych.model.ball.Ball;
 import com.exemple.kulynych.model.Wall;
 import com.exemple.kulynych.model.World;
+import com.exemple.kulynych.model.ball.ControlledBall;
+import com.exemple.kulynych.model.ball.SwingControlState;
 
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.BorderLayout;
+import java.awt.KeyboardFocusManager;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
@@ -25,7 +28,9 @@ public class FirstWindow extends JFrame implements ActionListener {
 
     private SwingView swingView;
     private World world;
+    private SwingControlState state;
     private JMenuItem itemBall;
+    private JMenuItem itemControlledBall;
     private JMenuItem itemWall;
     private JMenuItem delWalls;
     private JMenuItem delBalls;
@@ -34,7 +39,7 @@ public class FirstWindow extends JFrame implements ActionListener {
     private FirstWindow() {
         Container c = getContentPane(); // клиентская область окна
         c.setLayout(new BorderLayout()); // выбираем компоновщик
-
+        state = new SwingControlState();
         createMenu();
         createWindow();
         buildWorld();
@@ -78,6 +83,11 @@ public class FirstWindow extends JFrame implements ActionListener {
         itemBall.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_B, ActionEvent.ALT_MASK));
         menu.add(itemBall);
         itemBall.addActionListener(this);
+
+        itemControlledBall = new JMenuItem("New ControlledBall");
+        itemControlledBall.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_V, ActionEvent.ALT_MASK));
+        menu.add(itemControlledBall);
+        itemControlledBall.addActionListener(this);
 
         itemWall = new JMenuItem("New Wall");
         itemWall.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_W, ActionEvent.ALT_MASK));
@@ -123,6 +133,12 @@ public class FirstWindow extends JFrame implements ActionListener {
                     world,
                     5 + (int) (Math.random() * 60)));
         }
+        if (e.getSource().equals(itemControlledBall)) {
+            world.balls.add(new ControlledBall(
+                    world,
+                    5 + (int) (Math.random() * 60),
+                    state));
+        }
         if (e.getSource().equals(itemWall)) {
             world.walls.add(new Wall(
                     world,
@@ -143,5 +159,6 @@ public class FirstWindow extends JFrame implements ActionListener {
 
     public static void main(String args[]) {
         new FirstWindow();
+        KeyboardFocusManager.getCurrentKeyboardFocusManager();
     }
 }
