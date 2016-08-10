@@ -1,12 +1,13 @@
 package com.exemple.kulynych.model.ball;
 
+import com.exemple.kulynych.model.Physics;
 import com.exemple.kulynych.model.Position;
 import com.exemple.kulynych.model.Wall;
 import com.exemple.kulynych.model.World;
 
 import java.awt.Point;
 
-public class Ball {
+public class Ball implements Physics{
     private World world;
 
     // free fall acceleration, in pixels/s**2. TODO: experiment.
@@ -61,6 +62,7 @@ public class Ball {
     }
 
     // Calculate the new Ball's coordinates and speed at the given moment "timestamp"
+    @Override
     public void tick(long timestamp) {
         if (this.timestamp == 0) {
             this.timestamp = timestamp;
@@ -98,6 +100,16 @@ public class Ball {
 
         this.timestamp = timestamp;
         center();
+    }
+
+    @Override
+    public void collision(Ball ball) {
+        detectBallCollision(ball);
+    }
+
+    @Override
+    public void collision(Wall wall) {
+        detectWallCollision(wall);
     }
 
     public void detectWallCollision(Wall wall) {

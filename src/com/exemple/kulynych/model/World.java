@@ -21,13 +21,13 @@ public class World extends Component {
         for (int i = 0; i < balls.size(); i++) {
             Ball ballA = balls.get(i);
             for (int j = i + 1; j < balls.size(); j++) {
-                ballA.detectBallCollision(balls.get(j));
+                ballA.collision(balls.get(j));
             }
-            walls.forEach(ballA::detectWallCollision);
+            walls.forEach(ballA::collision);
         }
 
         for (Ball ball : balls) {
-            ball.tick(time);
+            ball.tick(time); //     polymorphism!!!
         }
     }
 

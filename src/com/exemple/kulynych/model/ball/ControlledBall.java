@@ -16,7 +16,6 @@ public class ControlledBall extends Ball {
 
         if (controlState.isUpPressed()) {
             this.getSpeed().y -= 20;
-            System.out.print("up is pressed down");
         }
         if (controlState.isDownPressed()) {
             this.getSpeed().y += 20;
