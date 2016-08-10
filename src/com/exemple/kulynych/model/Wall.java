@@ -6,7 +6,7 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Wall {
+public class Wall implements Physics {
     private World world;
     private Point wallPosition;
     private int rectHeight;
@@ -151,5 +151,13 @@ public class Wall {
 
     public int getRectWidth() {
         return rectWidth;
+    }
+
+    @Override
+    public void tick(long time) {
+    }
+
+    @Override
+    public void collision(Physics other) {
     }
 }

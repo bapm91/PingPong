@@ -50,11 +50,12 @@ public class SwingView extends JComponent {
 
     public void paint(Graphics g) {
 
-        for (Ball ball : world.balls) {
-            paintBall((Graphics2D) g, ball);
-        }
-        for (Wall wall : world.walls) {
-            paintWall((Graphics2D) g, wall);
+        for (int i = 0; i < world.figure.size(); i++) {
+            if (world.figure.get(i) instanceof Ball) {
+                paintBall((Graphics2D) g, (Ball) world.figure.get(i));
+            } else {
+                paintWall((Graphics2D) g, (Wall) world.figure.get(i));
+            }
         }
     }
 

@@ -129,31 +129,40 @@ public class FirstWindow extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         System.out.println(e.getActionCommand());
         if (e.getSource().equals(itemBall)) {
-            world.balls.add(new Ball(
+            world.figure.add(new Ball(
                     world,
                     5 + (int) (Math.random() * 60)));
         }
         if (e.getSource().equals(itemControlledBall)) {
-            world.balls.add(new ControlledBall(
+            world.figure.add(new ControlledBall(
                     world,
                     5 + (int) (Math.random() * 60),
                     state));
         }
         if (e.getSource().equals(itemWall)) {
-            world.walls.add(new Wall(
+            world.figure.add(new Wall(
                     world,
                     5 + (int) (Math.random() * 60),
                     5 + (int) (Math.random() * 60)));
         }
         if (e.getSource().equals(clearWorld)) {
-            world.balls.clear();
-            world.walls.clear();
+            world.figure.clear();
         }
         if (e.getSource().equals(delBalls)) {
-            world.balls.clear();
+            for (int i = 0; i < world.figure.size(); i++) {
+                if (!(world.figure.get(i) instanceof Wall)) {
+                    world.figure.remove(i);
+                    i--;
+                }
+            }
         }
         if (e.getSource().equals(delWalls)) {
-            world.walls.clear();
+            for (int i = 0; i < world.figure.size(); i++) {
+                if (world.figure.get(i) instanceof Wall) {
+                    world.figure.remove(i);
+                    i--;
+                }
+            }
         }
     }
 

@@ -7,7 +7,7 @@ import com.exemple.kulynych.model.World;
 
 import java.awt.Point;
 
-public class Ball implements Physics{
+public class Ball implements Physics {
     private World world;
 
     // free fall acceleration, in pixels/s**2. TODO: experiment.
@@ -103,13 +103,12 @@ public class Ball implements Physics{
     }
 
     @Override
-    public void collision(Ball ball) {
-        detectBallCollision(ball);
-    }
-
-    @Override
-    public void collision(Wall wall) {
-        detectWallCollision(wall);
+    public void collision(Physics figure) {
+        if (figure instanceof Ball) {
+            detectBallCollision((Ball) figure);
+        } else {
+            detectWallCollision((Wall) figure);
+        }
     }
 
     public void detectWallCollision(Wall wall) {
