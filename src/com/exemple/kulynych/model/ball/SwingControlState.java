@@ -12,7 +12,16 @@ public class SwingControlState extends KeyAdapter implements ControlState {
     private boolean isSpace;
 
     @Override
-    public void keyTyped(KeyEvent e) {
+    public void keyPressed(KeyEvent e) {
+        keyHandler(e);
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+        keyHandler(e);
+    }
+
+    public void keyHandler(KeyEvent e) {
         switch (e.getID()) {
             case KeyEvent.KEY_PRESSED:
                 if (e.getKeyCode() == KeyEvent.VK_UP) {

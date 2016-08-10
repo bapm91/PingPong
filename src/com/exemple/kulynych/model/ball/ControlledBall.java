@@ -15,21 +15,21 @@ public class ControlledBall extends Ball {
         super.tick(time);
 
         if (controlState.isUpPressed()) {
-            this.getSpeed().y -= 10;
+            this.getSpeed().y -= 20;
             System.out.print("up is pressed down");
         }
         if (controlState.isDownPressed()) {
-            this.getSpeed().y += 10;
+            this.getSpeed().y += 20;
         }
         if (controlState.isFirePressed()) {
             this.getSpeed().x += 100;
             this.getSpeed().y += 100;
         }
         if (controlState.isLeftPressed()) {
-            this.getSpeed().x -= 10;
+            this.getSpeed().x -= 20;
         }
         if (controlState.isRightPressed()) {
-            this.getSpeed().x += 10;
+            this.getSpeed().x += 20;
         }
     }
 }

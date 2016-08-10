@@ -9,7 +9,6 @@ import com.exemple.kulynych.model.ball.SwingControlState;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.BorderLayout;
-import java.awt.KeyboardFocusManager;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
@@ -43,6 +42,7 @@ public class FirstWindow extends JFrame implements ActionListener {
         createMenu();
         createWindow();
         buildWorld();
+        this.addKeyListener(state);
     }
 
     private void createWindow() {
@@ -159,6 +159,5 @@ public class FirstWindow extends JFrame implements ActionListener {
 
     public static void main(String args[]) {
         new FirstWindow();
-        KeyboardFocusManager.getCurrentKeyboardFocusManager();
     }
 }
