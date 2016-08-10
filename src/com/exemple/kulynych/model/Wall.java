@@ -15,6 +15,7 @@ public class Wall implements Physics {
     private int topSide;
     private int leftSide;
     private int bottomSide;
+    private int numberOfCollision = 0;
     private Point center = new Point(0, 0);
 
     public Wall(World world, int rectWidth, int rectHeight) {
@@ -141,6 +142,27 @@ public class Wall implements Physics {
         return "Do nothing";
     }
 
+    public void detectWallCollision(Ball ball) {
+        numberOfCollision++;
+        if (numberOfCollision >= 4) {
+            world.figure.remove(this);
+        }
+        if (this.contains(ball)) {
+            if (this.relatively(ball).equals("Right")) {
+                ball.setSpeed(Math.abs(ball.getSpeed().x), ball.getSpeed().y);
+            }
+            if (this.relatively(ball).equals("Left")) {
+                ball.setSpeed(-Math.abs(ball.getSpeed().x), ball.getSpeed().y);
+            }
+            if (this.relatively(ball).equals("Top")) {
+                ball.setSpeed(ball.getSpeed().x, -Math.abs(ball.getSpeed().y));
+            }
+            if (this.relatively(ball).equals("Bottom")) {
+                ball.setSpeed(ball.getSpeed().x, Math.abs(ball.getSpeed().y));
+            }
+        }
+    }
+
     public Point getWallPosition() {
         return wallPosition;
     }
@@ -158,6 +180,9 @@ public class Wall implements Physics {
     }
 
     @Override
-    public void collision(Physics other) {
+    public void collision(Physics figure) {
+        if (this.contains((Ball) figure)) {
+            detectWallCollision((Ball) figure);
+        }
     }
 }

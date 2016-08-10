@@ -106,27 +106,7 @@ public class Ball implements Physics {
     public void collision(Physics figure) {
         if (figure instanceof Ball) {
             detectBallCollision((Ball) figure);
-        } else {
-            detectWallCollision((Wall) figure);
         }
-    }
-
-    public void detectWallCollision(Wall wall) {
-        if (wall.contains(this)) {
-            if (wall.relatively(this).equals("Right")) {
-                this.speed.x = Math.abs(this.speed.x);
-            }
-            if (wall.relatively(this).equals("Left")) {
-                this.speed.x = -Math.abs(this.speed.x);
-            }
-            if (wall.relatively(this).equals("Top")) {
-                this.speed.y = -Math.abs(this.speed.y);
-            }
-            if (wall.relatively(this).equals("Bottom")) {
-                this.speed.y = Math.abs(this.speed.y);
-            }
-        }
-
     }
 
     public void detectBallCollision(Ball other) {

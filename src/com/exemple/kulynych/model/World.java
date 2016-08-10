@@ -18,18 +18,21 @@ public class World extends Component {
 
     public void tick(long time) {
         for (int i = 0; i < figure.size(); i++) {
-            if (figure.get(i) instanceof Ball) {
-                for (int j = 0; j < figure.size(); j++) {
-                    if (!(figure.get(j) instanceof Wall) && j > i) {
-                        figure.get(i).collision(figure.get(j));
-                    }
-                    if (figure.get(j) instanceof Wall) {
-                        figure.get(i).collision(figure.get(j));
-                    }
+            if (figure.get(i) instanceof Wall) {
+                continue;
+            }
+            Ball ballA = (Ball) figure.get(i);
+            for (int j = 0; j < figure.size(); j++) {
+                if (figure.get(j) instanceof Ball) {
+                    if (j > i)
+                        ballA.collision(figure.get(j));
+                }
+                if (figure.get(j) instanceof Wall) {
+                    figure.get(j).collision(ballA);
                 }
             }
         }
-        for (Physics physic : this.figure) {
+        for (Physics physic : figure) {
             physic.tick(time); //     polymorphism!!!
         }
     }
